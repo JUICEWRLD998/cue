@@ -9,7 +9,7 @@
   padding: var(--pad);
   box-shadow:
     0 1px 0 oklch(1 0 0 / 0.5) inset,
-    0 0.9rem 0 -0.5rem oklch(0.1 0.03 265 / 0.55);
+    0 0.9rem 0 -0.5rem var(--roll-shadow);
 }
 
 .roll[data-channel='cue'] {

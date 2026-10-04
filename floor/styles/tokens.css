@@ -20,7 +20,8 @@
   --paper-ink: oklch(0.26 0.03 265);
   --paper-dot: oklch(0.84 0.02 95);
   --paper-rule: oklch(0.76 0.02 95);
-  --hole: oklch(0.16 0.03 265);
+  --hole: oklch(0.15 0 0);
+  --roll-shadow: oklch(0.1 0.03 265 / 0.55);
 
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
@@ -49,6 +50,7 @@
     --paper: oklch(0.99 0.006 95);
     --paper-dot: oklch(0.9 0.012 95);
     --paper-rule: oklch(0.84 0.015 95);
+    --roll-shadow: oklch(0.5 0.04 265 / 0.22);
   }
 }
 
@@ -67,4 +69,5 @@
   --paper: oklch(0.99 0.006 95);
   --paper-dot: oklch(0.9 0.012 95);
   --paper-rule: oklch(0.84 0.015 95);
+  --roll-shadow: oklch(0.5 0.04 265 / 0.22);
 }

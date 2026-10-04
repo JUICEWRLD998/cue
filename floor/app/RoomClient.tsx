@@ -147,8 +147,8 @@ export default function RoomClient() {
           <p className={styles.meta}>
             {song
               ? live
-                ? song.bpm + ' bpm. ' + section?.title + ', ' + section?.kind + '.'
-                : song.bpm + ' bpm. Published in Sanity.'
+                ? <><span className={styles.num}>{song.bpm}</span> bpm. {section?.title}, {section?.kind}.</>
+                : <><span className={styles.num}>{song.bpm}</span> bpm. Published in Sanity.</>
               : 'Reading the published song from Sanity.'}
           </p>
           <div className={styles.actions}>
@@ -188,7 +188,7 @@ export default function RoomClient() {
         {live &&
           !queued &&
           drop &&
-          'Dropped at ' + fmt(drop.at) + '. The room heard it ' + (drop.heardMs / 1000).toFixed(1) + ' s after publish.'}
+          'Dropped at ' + fmt(drop.at) + '. That is the bar line after the publish, so the beat never stumbled.'}
         {live && !queued && !drop && 'No drop yet. Publish a change to the song and it lands here on the next bar.'}
       </p>
 

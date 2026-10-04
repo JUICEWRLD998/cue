@@ -1,7 +1,7 @@
 // A pressed record drawn in SVG. Rotation is set by the parent from the song position, so it
 // turns once per loop of the song and stops when the room is silent.
 export function Disc({turn, label}: {turn: number; label: string}) {
-  const grooves = Array.from({length: 22}, (_, i) => 24 + i * 1.9)
+  const grooves = Array.from({length: 22}, (_, i) => 19 + i * 1.3)
   return (
     <svg viewBox="0 0 100 100" role="img" aria-label={label} width="100%" height="100%">
       <defs>
