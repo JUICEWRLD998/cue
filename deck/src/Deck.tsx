@@ -24,15 +24,21 @@ const handle = {
 } as const
 
 const strip = (d: unknown) => {
-  const {_rev, _updatedAt, _createdAt, ...rest} = (d ?? {}) as Record<string, unknown>
+  const {_id, _rev, _updatedAt, _createdAt, ...rest} = (d ?? {}) as Record<string, unknown>
   return JSON.stringify(rest)
 }
 
 export function Deck() {
   const {data: draft} = useDocument({...handle}) as unknown as {data: SongDoc | null | undefined}
-  const {data: published} = useDocument({...handle, perspective: 'published'}) as unknown as {
-    data: SongDoc | null | undefined
-  }
+  // useDocument ignores perspective 'published' (only release perspectives are honored),
+  // so read the room's copy with a published-perspective query.
+  const {data: published} = useQuery<SongDoc | null>({
+    query: '*[_id == $id][0]',
+    params: {id: handle.documentId},
+    perspective: 'published',
+    projectId: PROJECT_ID,
+    dataset: DATASET,
+  })
   const {data: voiceList} = useQuery<VoiceDoc[]>({
     query: '*[_type == "voice"] | order(_id)',
     projectId: PROJECT_ID,
