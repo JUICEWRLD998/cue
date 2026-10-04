@@ -113,4 +113,4 @@ then the Floor, the Booth, the Deck and the Studio. [Add the Agent Session embed
 2. Open `/booth`, punch some holes in, and press **Hear my draft**. The room cannot hear you.
 3. The repo has `TEST.md`, a step-by-step guide for the Deck, the Studio and the whole drop.
 
-Made by Mustapha Fadhlullah, independent security researcher.
+Made by Mustapha Fadhlullah.

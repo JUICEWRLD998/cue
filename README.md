@@ -4,11 +4,21 @@
 Published is the room. Drafts are the headphones. Publishing is the drop.
 
 Built for the DEV Sanity Challenge, Path Two ("Vibe-code something strange"), by
-Mustapha Fadhlullah, independent security researcher.
+Mustapha Fadhlullah.
 
 - Sanity project ID: `jwc6peq5`, dataset `production` (public, read-only for everyone)
 - Source: https://github.com/JUICEWRLD998/cue
+- Live Floor (public, no login): https://cue-steel-seven.vercel.app/
+- Live Deck: https://www.sanity.io/@o4h8r4fp1/application/hfqfe4stqbkn23mv9qs3bryp (**Cue Deck** in the Sanity
+  Dashboard). Needs a sign-in to the Sanity organization.
 - Want to test it? Read [TEST.md](TEST.md). Want the honest limits? Read [Honest limits](#honest-limits).
+
+## Try it in two minutes
+
+1. Open the live Floor and press **Start the room**. You hear the published song.
+2. Open `/booth` on the same site. Click some holes, press **Hear my draft**. Only you hear it. No login, nothing saved.
+3. Want to see the real Drop? That needs the Deck, which only the DJ can open. Watch the demo video, or follow
+   [DEMO.md](DEMO.md) with a Sanity login.
 
 ## The idea in one minute
 
@@ -31,9 +41,8 @@ No audio files exist in this project. Every sound is synthesised in the browser 
 | `deck/` | Sanity **App SDK** custom app (React 19, `@sanity/sdk-react`). Edits the **draft**, plays it as a Cue channel, publishes with Drop. Runs inside the Sanity Dashboard. | The DJ (signed in) |
 | `studio/` | Sanity Studio 6. The schema, a custom 16-step grid input, and the seed script. | The DJ, schema review |
 | `scripts/` | Chrome (CDP) test drivers: publish path, booth click path, palette measurement, screenshots, a Drop filmstrip. | Developers |
-| `IMPLEMENTATION.md` | The 10-phase plan, blocker register, verification gates, odds. | Maintainers, judges |
 | `TEST.md` | Step-by-step guide to test everything. | Testers |
-| `DEMO.md`, `VOICEOVER.md`, `POST.md` | Demo video plan, narration script, DEV post draft. | The author |
+| `DEMO.md`, `VOICEOVER.md`, `POST.md` | How to do the live demo, narration script, DEV post draft. | The author |
 
 ## The surfaces
 
@@ -95,9 +104,10 @@ Three decisions you can disagree with:
 Validation: indexes are integers 0 to 15, a lane cannot contain two steps with the same index, and ranges are enforced
 on every numeric field.
 
-## Run it
+## Run it yourself
 
-You need Node 22.12 or newer. Chrome is needed only for the test scripts.
+The Floor and the Deck are already deployed, so you only need this section to change the code or point Cue at your own
+Sanity project. You need Node 22.12 or newer. Chrome is needed only for the test scripts.
 
 ```bash
 # the public room and booth (no login needed)
@@ -121,7 +131,8 @@ cd studio && npx sanity exec scripts/seed.ts --with-user-token
 
 The dataset must be public, with a CORS origin of `*` (credentials off) so browsers can read it.
 
-Deploy: the Floor is a standard Next.js app. `deck` and `studio` deploy with `npx sanity deploy`.
+Deploy: the Floor is a standard Next.js app, deployed to any Next.js host. `deck` and `studio` deploy with
+`npx sanity deploy`.
 
 ## Tests and checks
 
@@ -157,8 +168,9 @@ What was verified, and what was not.
   overflow from 320 to 1920 px.
 - The author heard the Floor play on a real machine.
 
-**Built but not driven by the author in a signed-in browser:**
-- The Deck inside the Sanity Dashboard. It builds and type-checks. See TEST.md section 4 for the first real check.
+**Deployed, but not yet click-tested end to end by the author in a signed-in browser:**
+- The Deck inside the Sanity Dashboard. It builds, type-checks and deployed without errors. The first full run is the
+  demo recording. TEST.md section 4 lists what to check.
 - The visual look of the Studio step-grid input.
 
 **Known gaps:**
