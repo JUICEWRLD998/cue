@@ -1,16 +1,28 @@
-body { margin: 0; font-family: system-ui, sans-serif; }
-.boot { padding: 2rem; }
-.deck { max-width: 64rem; margin: 0 auto; padding: 1.5rem 1rem; }
-.bar { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
-.bar h1 { margin: 0 auto 0 0; font-size: 1.4rem; }
-.bar input { width: 4.5rem; margin-left: 0.4rem; }
-.bar button, .tabs button { padding: 0.45rem 0.9rem; cursor: pointer; }
-.bar button[aria-pressed="true"], .tabs button[aria-pressed="true"] { outline: 2px solid currentColor; }
-.state { margin: 0.75rem 0; opacity: 0.8; }
-.tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
-.grid { display: grid; gap: 4px; }
-.lane { display: grid; grid-template-columns: 7rem repeat(16, 1fr); gap: 4px; align-items: center; }
-.name { font-size: 0.85rem; }
-.cell { aspect-ratio: 1; min-height: 20px; border: 0; border-radius: 3px; background: rgba(127,127,127,.2); cursor: pointer; }
-.cell.beat { background: rgba(127,127,127,.32); }
-.cell.on { background: currentColor; }
+@import '../../floor/styles/tokens.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.55;
+  overflow-x: clip;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--room);
+  outline-offset: 3px;
+}
