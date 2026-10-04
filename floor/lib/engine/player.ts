@@ -46,6 +46,8 @@ export class Player {
 
   // The first song starts at once; later songs wait for the next bar boundary.
   setSong(song: Song): number {
+    // a song with no sections has nothing to play and would break the bar maths
+    if (song.sections.length === 0 || song.sections.every((s) => s.bars < 1)) return Date.now()
     if (!this.active) {
       this.active = song
       this.cursorWall = this.nextStepWall(song)
