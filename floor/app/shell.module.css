@@ -24,11 +24,27 @@
 
 .nav a {
   display: inline-flex;
+  white-space: nowrap;
   align-items: center;
   min-height: 2.5rem;
   text-decoration: none;
   color: var(--mute);
   transition: color var(--dur-short) ease;
+}
+
+.nav a.source {
+  gap: 0.45rem;
+}
+
+@media (max-width: 26rem) {
+  .nav a.source span {
+    display: none;
+  }
+
+  .nav a.source {
+    min-width: 2.5rem;
+    justify-content: center;
+  }
 }
 
 @media (hover: hover) and (pointer: fine) {
