@@ -35,6 +35,8 @@
 }
 
 .name {
+  overflow-wrap: anywhere;
+  padding-inline-end: 0.5rem;
   font-size: 0.9rem;
   font-weight: 600;
   line-height: 1.2;
@@ -108,7 +110,7 @@
 }
 
 .press:active {
-  transform: scale(0.94);
+  transform: scale(0.96);
 }
 
 .press:focus-visible {
@@ -139,6 +141,11 @@
   .scroll .sheet {
     min-width: 28rem;
   }
+
+  /* touch targets: square cells, 28px, so every hole is at least 24px both ways */
+  .scroll .cell {
+    aspect-ratio: 1;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -146,4 +153,16 @@
   .press {
     transition: none;
   }
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  list-style: none;
 }

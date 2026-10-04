@@ -31,7 +31,16 @@ export function Roll({lanes, step, channel, dropId, dropping, onToggle, label}: 
       role="group"
       aria-label={label}
     >
-      <div className={styles.sheet}>
+      {!interactive && (
+        <ul className={styles.srOnly}>
+          {lanes.map((l) => (
+            <li key={l.voiceId}>
+              {l.name + ": " + (l.steps.length ? "steps " + [...l.steps].sort((a, b) => a - b).map((s) => s + 1).join(", ") : "no hits")}
+            </li>
+          ))}
+        </ul>
+      )}
+      <div className={styles.sheet} aria-hidden={!interactive || undefined}>
         {step >= 0 && (
           <div className={styles.headTrack} aria-hidden>
             <span className={styles.head} style={{transform: `translateX(${step * 100}%)`}} />
