@@ -4,7 +4,7 @@ import {useCallback, useEffect, useRef, useState} from 'react'
 import {Roll} from '../../components/Roll'
 import {positionAt, type Song} from '../../lib/engine/clock.ts'
 import {Player} from '../../lib/engine/player.ts'
-import {toggleSongStep} from '../../lib/engine/songEdit.ts'
+import {countChanges, toggleSongStep} from '../../lib/engine/songEdit.ts'
 import type {VoiceDoc} from '../../lib/engine/synth.ts'
 import {rollLanes} from '../../lib/roll-lanes'
 import {fetchRoom} from '../../lib/sanity.ts'
@@ -16,7 +16,7 @@ export default function BoothClient() {
   const [section, setSection] = useState(0)
   const [step, setStep] = useState(-1)
   const [cue, setCue] = useState(false)
-  const [edits, setEdits] = useState(0)
+  const [baseline, setBaseline] = useState<Song | null>(null)
   const [error, setError] = useState('')
   const player = useRef<Player | null>(null)
 
@@ -26,7 +26,7 @@ export default function BoothClient() {
       if (!room.song) throw new Error('No published song in the dataset.')
       setVoices(room.voices)
       setDraft(room.song)
-      setEdits(0)
+      setBaseline(room.song)
       if (player.current) {
         player.current.setVoices(room.voices)
         player.current.setSong(room.song)
@@ -63,7 +63,6 @@ export default function BoothClient() {
         if (cue) player.current?.setSong(next)
         return next
       })
-      setEdits((n) => n + 1)
     },
     [section, cue],
   )
@@ -89,6 +88,7 @@ export default function BoothClient() {
 
   useEffect(() => () => player.current?.stop(), [])
 
+  const edits = draft && baseline ? countChanges(draft, baseline) : 0
   const current = draft?.sections[Math.min(section, (draft?.sections.length ?? 1) - 1)]
 
   return (
