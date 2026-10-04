@@ -1,6 +1,6 @@
 import {test} from 'node:test'
 import assert from 'node:assert/strict'
-import {toggleSongStep} from './songEdit.ts'
+import {countChanges, toggleSongStep} from './songEdit.ts'
 import type {Song} from './clock.ts'
 
 const song = (): Song => ({
@@ -37,4 +37,17 @@ test('does not mutate its input', () => {
   const before = JSON.stringify(d)
   toggleSongStep(d, 0, 'voice-kick', 8)
   assert.equal(JSON.stringify(d), before)
+})
+
+test('countChanges is zero for identical songs and counts differing holes', () => {
+  const a = song()
+  assert.equal(countChanges(a, song()), 0)
+  const b = toggleSongStep(a, 0, 'voice-kick', 4)
+  assert.equal(countChanges(b, a), 1)
+})
+
+test('toggling the same hole twice leaves zero changes', () => {
+  const a = song()
+  const b = toggleSongStep(toggleSongStep(a, 0, 'voice-kick', 4), 0, 'voice-kick', 4)
+  assert.equal(countChanges(b, a), 0)
 })

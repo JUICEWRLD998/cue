@@ -20,3 +20,20 @@ export function toggleSongStep(song: Song, sectionIndex: number, voiceId: string
     }),
   }
 }
+
+// How many holes differ between two songs, counted per section, voice and step.
+export function countChanges(a: Song, b: Song): number {
+  const cells = (s: Song) => {
+    const set = new Set<string>()
+    s.sections.forEach((section, si) =>
+      section.lanes.forEach((lane) => lane.steps.forEach((st) => set.add(si + ':' + lane.voiceId + ':' + st.index))),
+    )
+    return set
+  }
+  const x = cells(a)
+  const y = cells(b)
+  let n = 0
+  for (const k of x) if (!y.has(k)) n++
+  for (const k of y) if (!x.has(k)) n++
+  return n
+}
