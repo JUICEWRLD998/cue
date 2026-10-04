@@ -7,3 +7,4 @@ dist/
 .sanity/
 *.log
 .DS_Store
+scripts/*.png

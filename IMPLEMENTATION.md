@@ -26,11 +26,12 @@ perspective are the same machine. (Content Releases were dropped from the pitch:
 | B5 | Draft reads need a token | VERIFIED by design | Floor reads `published` from a **public** dataset, no token. Deck runs inside the authenticated App SDK. No token ever ships in the Floor. |
 | B6 | Publishing a doc does not publish documents it references | Sanity behaviour, known | Everything the Floor needs is **embedded in the one `song` document**. Voices are separate docs, published once at seed time. The Drop is therefore atomic. This is also the schema story for the writeup. |
 | B7 | App SDK action names (`publishDocument`, `useApplyDocumentActions`) | UNVERIFIED | Phase 4: read `@sanity/sdk` typings in `node_modules`. Fallback: the Studio's own Publish button + Floor unchanged. |
-| B8 | `client.listen()` latency | UNVERIFIED | Phase 3 measures it. Fallback: poll `published` every 1.5 s. Either meets "next bar". |
+| B8 | `client.listen()` latency | **VERIFIED 2026-10-04**: tokenless listen delivered 4/4 publishes in 226-548 ms (includes the commit round trip). Browser run: change noticed 1.5 s after publish, Drop on the next bar 3.4 s after publish (bpm 118, bar = 2.03 s). | none; polling stays as a 2 s fallback |
 | B9 | Browser autoplay | Known | Floor needs a click: the *Start the room* button is the entry gesture. Not a bug, a UI element. |
 | B10 | Tab sync between Deck cue and Floor | Design | Both derive the step from wall clock: `step = floor((Date.now() - EPOCH) / stepMs)`. No server clock. Swap on the next bar boundary. |
 | B11 | Deploy target for the Floor | Vercel CLI 54.10.2 installed; login UNVERIFIED | Phase 8 runs `vercel whoami`. Fallback: Cloudflare Pages, or Vercel via git. |
 | B12 | Sample files / licensing | Avoided | No audio assets. Voices are synthesised in Web Audio from parameters stored in Sanity (`voice` docs). Zero licence risk, zero upload step. |
+| B13 | Browser fetches to the Sanity API failed ("Failed to fetch") | **FOUND AND FIXED 2026-10-04**: public dataset still needs a CORS origin. Added `*` without credentials via the management API. | Re-add `*` if the project is ever recreated; Deck origin (Dashboard) is handled by the App SDK. |
 
 No hard blocker after B1. B7 and B8 have fallbacks that keep the pitch intact.
 
@@ -41,7 +42,7 @@ cue/
   studio/    Sanity Studio v5: schema, custom StepGrid input, seed script
   deck/      App SDK app (React 19): edit draft, Cue channel, Drop button
   floor/     Next.js App Router: public player, reads published only
-  shared/    audio engine (Web Audio scheduler), types, voice synth, step math
+  floor/lib/engine/   audio engine (step math, Web Audio scheduler, voice synth); the Deck will import it by relative path (no workspace, installs here are slow)
 ```
 
 - `shared/engine.ts`: `AudioContext` scheduler with 100 ms look-ahead, 25 ms tick. Maps `Date.now()` to `ctx.currentTime` once at start. Pure functions for step math so they are unit tested.
@@ -75,7 +76,7 @@ Git: repo `cue/`, remote `origin` = github.com/JUICEWRLD998/cue, `main` always r
 |---|---|---|---|---|
 | 1 Foundations | `phase/1-foundations` | git repo + README + `.gitignore`; Sanity project "cue" + public dataset `production`; Studio scaffold in `studio/` | `npx sanity projects list` shows the project; `studio` builds | DONE 2026-10-04 (project jwc6peq5, studio builds) |
 | 2 Schema + seed | `phase/2-schema-seed` | `voice`, `song` (embedded section/lane/step) schema; `sanity schema deploy`; seed script (6 voices, song "Warm-up" published) | tokenless `curl` of `*[_type=="song"]` returns the song with embedded steps | DONE 2026-10-04 (schema deployed, 7 docs seeded, tokenless GROQ read verified) |
-| 3 Engine + Floor v0 | `phase/3-engine-floor` | `shared/engine` (step math + scheduler, unit tested first); Floor v0 (Next.js) plays the published song; swap on next bar via `listen` or poll | edit draft + Publish in Studio changes the Floor within one bar; latency recorded; planted control: an unpublished draft edit does NOT change the Floor | todo |
+| 3 Engine + Floor v0 | `phase/3-engine-floor` | `shared/engine` (step math + scheduler, unit tested first); Floor v0 (Next.js) plays the published song; swap on next bar via `listen` or poll | edit draft + Publish in Studio changes the Floor within one bar; latency recorded; planted control: an unpublished draft edit does NOT change the Floor | DONE 2026-10-04 (10/10 engine tests; browser-driven check 6/6 incl. draft control; see scripts/verify-phase3.mjs) |
 | 4 Deck | `phase/4-deck` | App SDK app: step grid on the draft, Cue toggle (plays draft locally), Drop button (publish action) | two tabs: Deck Drop changes Floor | todo |
 | 5 Studio input | `phase/5-studio-input` | Custom StepGrid input for `lane.steps` in Studio | grid usable inside Studio | todo |
 | 6 UI pass | `phase/6-ui` | `ui-studio` pipeline over Floor + Deck, section 6 brief | quality bar in `~/.claude/skills/ui-studio/SKILL.md`, rendered, 8 widths, both themes | todo |
