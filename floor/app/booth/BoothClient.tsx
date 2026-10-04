@@ -92,19 +92,19 @@ export default function BoothClient() {
   const current = draft?.sections[Math.min(section, (draft?.sections.length ?? 1) - 1)]
 
   return (
-    <main className={styles.main}>
+    <main id="main" className={styles.main}>
       <h1 className={styles.title}>The booth</h1>
       <p className={styles.lede}>
         Punch holes into a copy of the room&apos;s song and hear your draft in your own headphones. Nothing here is saved,
         and the room cannot hear it. Only the DJ can drop, because publishing needs a Sanity login in the Deck.
       </p>
 
-      {error && <p className={styles.err}>Could not load the song: {error}</p>}
+      {error && <p className={styles.err}>Could not load the song: {error}. Check your connection and reload the page.</p>}
 
       {draft && (
         <>
           <div className={styles.bar}>
-            <button className={styles.primary} aria-pressed={cue} onClick={toggleCue}>
+            <button className={styles.primary} data-on={cue} onClick={toggleCue}>
               {cue ? 'Stop my draft' : 'Hear my draft'}
             </button>
             <button className={styles.secondary} onClick={() => void load()} disabled={edits === 0}>
