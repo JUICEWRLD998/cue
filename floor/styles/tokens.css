@@ -1,0 +1,73 @@
+/* Cue design tokens. Every colour and duration in the app comes from here. */
+:root {
+  --ground: oklch(0.17 0.03 265);
+  --raise: oklch(0.22 0.035 265);
+  --line: oklch(0.32 0.03 265);
+  --ink: oklch(0.95 0.01 90);
+  --mute: oklch(0.76 0.02 265);
+
+  --room: oklch(0.8 0.15 75);
+  --cue: oklch(0.82 0.13 168);
+  --drop: oklch(0.66 0.2 35);
+  --on-room: oklch(0.2 0.04 75);
+  --on-cue: oklch(0.2 0.04 168);
+  --on-drop: oklch(0.2 0.04 35);
+  /* inks for graphics on the paper roll: darker kin of the room and cue hues */
+  --room-ink: oklch(0.58 0.16 55);
+  --cue-ink: oklch(0.5 0.12 168);
+
+  --paper: oklch(0.93 0.02 95);
+  --paper-ink: oklch(0.26 0.03 265);
+  --paper-dot: oklch(0.84 0.02 95);
+  --paper-rule: oklch(0.76 0.02 95);
+  --hole: oklch(0.15 0 0);
+  --roll-shadow: oklch(0.1 0.03 265 / 0.55);
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --dur-micro: 120ms;
+  --dur-short: 200ms;
+  --dur-drop: 900ms;
+
+  --gutter: clamp(1rem, 4vw, 2.5rem);
+  --shell: 76rem;
+  color-scheme: dark light;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dark']) {
+    --ground: oklch(0.94 0.014 265);
+    --raise: oklch(0.9 0.02 265);
+    --line: oklch(0.78 0.025 265);
+    --ink: oklch(0.22 0.03 265);
+    --mute: oklch(0.42 0.03 265);
+    --room: oklch(0.52 0.14 62);
+    --cue: oklch(0.48 0.11 168);
+    --drop: oklch(0.5 0.2 33);
+    --on-room: oklch(0.98 0.01 75);
+    --on-cue: oklch(0.98 0.01 168);
+    --on-drop: oklch(0.98 0.01 90);
+    --paper: oklch(0.99 0.006 95);
+    --paper-dot: oklch(0.9 0.012 95);
+    --paper-rule: oklch(0.84 0.015 95);
+    --roll-shadow: oklch(0.5 0.04 265 / 0.22);
+  }
+}
+
+:root[data-theme='light'] {
+  --ground: oklch(0.94 0.014 265);
+  --raise: oklch(0.9 0.02 265);
+  --line: oklch(0.78 0.025 265);
+  --ink: oklch(0.22 0.03 265);
+  --mute: oklch(0.42 0.03 265);
+  --room: oklch(0.52 0.14 62);
+  --cue: oklch(0.48 0.11 168);
+  --drop: oklch(0.5 0.2 33);
+  --on-room: oklch(0.98 0.01 75);
+  --on-cue: oklch(0.98 0.01 168);
+    --on-drop: oklch(0.98 0.01 90);
+  --paper: oklch(0.99 0.006 95);
+  --paper-dot: oklch(0.9 0.012 95);
+  --paper-rule: oklch(0.84 0.015 95);
+  --roll-shadow: oklch(0.5 0.04 265 / 0.22);
+}

@@ -1,0 +1,168 @@
+.roll {
+  --label: 6.5rem;
+  --pad: clamp(0.75rem, 2vw, 1.5rem);
+  --head: var(--room-ink);
+  position: relative;
+  background: var(--paper);
+  color: var(--paper-ink);
+  border-radius: 0.5rem;
+  padding: var(--pad);
+  box-shadow:
+    0 1px 0 oklch(1 0 0 / 0.5) inset,
+    0 0.9rem 0 -0.5rem var(--roll-shadow);
+}
+
+.roll[data-channel='cue'] {
+  --head: var(--cue-ink);
+}
+
+.sheet {
+  position: relative;
+  display: grid;
+  gap: 0;
+}
+
+.lane {
+  display: grid;
+  grid-template-columns: var(--label) minmax(0, 1fr);
+  align-items: center;
+  border-bottom: 1px dashed var(--paper-rule);
+  padding: 0.15rem 0;
+}
+
+.lane:last-of-type {
+  border-bottom: 0;
+}
+
+.name {
+  overflow-wrap: anywhere;
+  padding-inline-end: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.cells {
+  display: grid;
+  grid-template-columns: repeat(16, minmax(0, 1fr));
+  min-width: 0;
+}
+
+.cell {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1.45;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+.beat .dot {
+  width: 24%;
+  background: var(--paper-rule);
+}
+
+.dot {
+  width: 18%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--paper-dot);
+}
+
+.hole {
+  position: absolute;
+  width: 64%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--hole);
+  box-shadow: inset 0 2px 3px oklch(0 0 0 / 0.55);
+}
+
+/* the reading head: one column wide, moved with transform only */
+.headTrack {
+  position: absolute;
+  top: calc(var(--pad) * -0.5);
+  bottom: calc(var(--pad) * -0.5);
+  left: var(--label);
+  right: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.head {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: calc(100% / 16);
+  background: linear-gradient(to right, transparent calc(50% - 1.5px), var(--head) calc(50% - 1.5px), var(--head) calc(50% + 1.5px), transparent calc(50% + 1.5px));
+  transition: transform var(--dur-micro) var(--ease-out);
+}
+
+.press {
+  cursor: pointer;
+  transition: transform var(--dur-micro) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .press:hover .dot {
+    background: var(--paper-rule);
+  }
+}
+
+.press:active {
+  transform: scale(0.96);
+}
+
+.press:focus-visible {
+  outline-color: var(--head);
+  border-radius: 0.35rem;
+}
+
+@media (max-width: 40rem) {
+  .roll {
+    --label: 0px;
+  }
+
+  .lane {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 0.25rem 0 0.35rem;
+  }
+
+  .name {
+    font-size: 0.8rem;
+    padding-left: 0.1rem;
+  }
+
+  .scroll {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+  }
+
+  .scroll .sheet {
+    min-width: 28rem;
+  }
+
+  /* touch targets: square cells, 28px, so every hole is at least 24px both ways */
+  .scroll .cell {
+    aspect-ratio: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .head,
+  .press {
+    transition: none;
+  }
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  list-style: none;
+}

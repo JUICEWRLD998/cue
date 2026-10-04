@@ -72,11 +72,12 @@ try {
   }
   await send('Page.enable')
   await send('Runtime.enable')
+  // clean slate BEFORE the page loads: song at 118 bpm, no draft
+  await mutate([{patch: {id: 'song-warmup', set: {bpm: 118}}}, {delete: {id: 'drafts.song-warmup'}}])
+  await sleep(1500)
   await send('Page.navigate', {url: URL_})
   await sleep(1500)
 
-  // clean slate: song at 118 bpm, no draft
-  await mutate([{patch: {id: 'song-warmup', set: {bpm: 118}}}, {delete: {id: 'drafts.song-warmup'}}])
 
   await evalJs('Array.from(document.querySelectorAll("button")).find(b => b.textContent.includes("Start the room")).click()')
   let live = false
@@ -88,7 +89,7 @@ try {
 
   const steps = new Set()
   for (let i = 0; i < 30; i++) {
-    steps.add(await evalJs('Array.from(document.querySelectorAll("[role=cell]")).findIndex(c => c.className.includes("now")) % 16'))
+    steps.add(await evalJs('(() => { const h = document.querySelector("[class*=Roll-module][class*=head]:not([class*=headTrack])"); const m = h ? h.style.transform.match(/-?[0-9.]+/) : null; return m ? Number(m[0]) : -1 })()'))
     await sleep(100)
   }
   check('playhead moves on the wall clock', steps.size >= 4, `distinct steps seen: ${steps.size}`)
@@ -101,7 +102,7 @@ try {
     sections: [{_type: 'section', _key: 'x', title: 'x', kind: 'drop', bars: 1, lanes: []}]}}])
   await sleep(5000)
   const afterDraft = await statusText()
-  const title = await evalJs('document.querySelector("section[aria-label]") ? document.querySelector("section[aria-label]").textContent : ""')
+  const title = await evalJs('document.body.textContent')
   check('CONTROL: a draft edit does not reach the room', afterDraft.includes('No drop yet') && !title.includes('DRAFT ONLY') && !title.includes('140'))
 
   // the real thing: publish a change
@@ -112,7 +113,7 @@ try {
   for (let i = 0; i < 120 && !droppedAt; i++) {
     const s = await statusText()
     if (!queuedAt && s.includes('queued')) queuedAt = Date.now()
-    if (s.includes('Last drop')) droppedAt = Date.now()
+    if (s.includes('Dropped at')) droppedAt = Date.now()
     await sleep(50)
   }
   check('publish is noticed (queued)', queuedAt > 0, queuedAt ? `${queuedAt - t0} ms after publish` : '')

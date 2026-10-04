@@ -1,5 +1,5 @@
-import Room from './Room'
+import RoomClient from './RoomClient'
 
 export default function Page() {
-  return <Room />
+  return <RoomClient />
 }

@@ -6,9 +6,11 @@ export default defineCliConfig({
     entry: './src/App.tsx',
     title: 'Cue Deck',
   },
-  // The Deck reuses the audio engine in ../floor/lib/engine (pure TypeScript, no workspace).
+  // The Deck reuses the engine and the roll component from ../floor (no workspace, no copy).
+  // React and motion must resolve to one copy, so dedupe them.
   vite: (config) => ({
     ...config,
+    resolve: {...config.resolve, dedupe: ['react', 'react-dom', 'motion']},
     server: {...config.server, fs: {...config.server?.fs, allow: ['..']}},
   }),
 })
