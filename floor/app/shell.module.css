@@ -49,3 +49,19 @@
 .footer p {
   margin: 0;
 }
+
+.skip {
+  position: absolute;
+  inset-inline-start: 0.75rem;
+  top: -4rem;
+  z-index: 10;
+  padding: 0.7rem 1rem;
+  border-radius: 0.5rem;
+  background: var(--room);
+  color: var(--on-room);
+  font-weight: 700;
+}
+
+.skip:focus-visible {
+  top: 0.75rem;
+}

@@ -18,6 +18,9 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en" className={display.variable + ' ' + body.variable}>
       <body>
+        <a href="#main" className={styles.skip}>
+          Skip to content
+        </a>
         <header className={styles.header}>
           <Link href="/" className={styles.mark}>
             Cue
