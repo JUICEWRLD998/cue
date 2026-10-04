@@ -102,7 +102,7 @@ export function Deck() {
             />
             <span>bpm</span>
           </label>
-          <button className={styles.cue} aria-pressed={cue.on} onClick={cue.toggle}>
+          <button className={styles.cue} data-on={cue.on} onClick={cue.toggle}>
             {cue.on ? 'Cue is on' : 'Cue off'}
           </button>
           <button

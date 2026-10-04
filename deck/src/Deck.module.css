@@ -79,7 +79,7 @@
   box-shadow: inset 0 0 0 1px var(--line);
 }
 
-.cue[aria-pressed='true'] {
+.cue[data-on='true'] {
   background: var(--cue);
   color: var(--on-cue);
   box-shadow: none;
@@ -114,7 +114,7 @@
 .drop:active:not(:disabled),
 .quiet:active:not(:disabled),
 .tabs button:active {
-  transform: scale(0.97);
+  transform: scale(0.96);
 }
 
 @media (hover: hover) and (pointer: fine) {
