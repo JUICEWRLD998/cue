@@ -19,7 +19,7 @@ perspective are the same machine. (Content Releases were dropped from the pitch:
 
 | # | Risk | Status | Plan |
 |---|---|---|---|
-| B1 | Sanity login | **CLEARED 2026-10-04** (`sanity projects list` works, 0 projects yet) | none |
+| B1 | Sanity login + org | CLEARED 2026-10-04 (org o4h8r4fp1 created via management API, project jwc6peq5) | none |
 | B2 | App SDK needs React 19, Node >= 22.12, an organization and a Dashboard to host | Node 24.14 OK. Org: VERIFIED required (quickstart: "Choose your organization, or create a new one"). | Create the org in `init`. |
 | B3 | App SDK apps deploy to the org Dashboard only; judges can't open the Deck | VERIFIED (docs: "available within your organization dashboard") | Floor is the live URL. Post carries Deck screenshots + a 15 s clip (R1). Not a blocker; a framing rule. |
 | B4 | Releases are Enterprise-only | VERIFIED false on Free | Already designed out. |
@@ -73,7 +73,7 @@ Git: repo `cue/`, remote `origin` = github.com/JUICEWRLD998/cue, `main` always r
 
 | Phase | Branch | Deliverable | Exit check (must pass before merge) | Status |
 |---|---|---|---|---|
-| 1 Foundations | `phase/1-foundations` | git repo + README + `.gitignore`; Sanity project "cue" + public dataset `production`; Studio scaffold in `studio/` | `npx sanity projects list` shows the project; `studio` builds | todo |
+| 1 Foundations | `phase/1-foundations` | git repo + README + `.gitignore`; Sanity project "cue" + public dataset `production`; Studio scaffold in `studio/` | `npx sanity projects list` shows the project; `studio` builds | DONE 2026-10-04 (project jwc6peq5, studio builds) |
 | 2 Schema + seed | `phase/2-schema-seed` | `voice`, `song` (embedded section/lane/step) schema; `sanity schema deploy`; seed script (6 voices, song "Warm-up" published) | tokenless `curl` of `*[_type=="song"]` returns the song with embedded steps | todo |
 | 3 Engine + Floor v0 | `phase/3-engine-floor` | `shared/engine` (step math + scheduler, unit tested first); Floor v0 (Next.js) plays the published song; swap on next bar via `listen` or poll | edit draft + Publish in Studio changes the Floor within one bar; latency recorded; planted control: an unpublished draft edit does NOT change the Floor | todo |
 | 4 Deck | `phase/4-deck` | App SDK app: step grid on the draft, Cue toggle (plays draft locally), Drop button (publish action) | two tabs: Deck Drop changes Floor | todo |
