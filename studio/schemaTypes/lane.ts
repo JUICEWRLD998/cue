@@ -1,4 +1,5 @@
 import {defineField, defineType} from 'sanity'
+import {StepGridInput} from '../components/StepGridInput'
 
 /**
  * One instrument row inside a section. The steps are embedded on purpose:
@@ -20,6 +21,7 @@ export const lane = defineType({
       name: 'steps',
       type: 'array',
       of: [{type: 'step'}],
+      components: {input: StepGridInput},
       validation: (r) =>
         r.custom((steps) => {
           if (!Array.isArray(steps)) return true
