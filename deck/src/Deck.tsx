@@ -12,7 +12,7 @@ import {Roll} from '../../floor/components/Roll'
 import {toEngineSong, toggleStep, type SongDoc} from '../../floor/lib/engine/doc.ts'
 import type {VoiceDoc} from '../../floor/lib/engine/synth.ts'
 import {rollLanes} from '../../floor/lib/roll-lanes'
-import {DATASET, PROJECT_ID} from './App'
+import {DATASET, PROJECT_ID} from './config'
 import styles from './Deck.module.css'
 import {useCue} from './useCue'
 

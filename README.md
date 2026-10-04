@@ -112,7 +112,7 @@ cd studio && npm install && npx sanity dev --port 3334
 ```
 
 To point at your own Sanity project, set `NEXT_PUBLIC_SANITY_PROJECT_ID` and `NEXT_PUBLIC_SANITY_DATASET` for the Floor
-(or edit `floor/lib/sanity.ts`), edit `PROJECT_ID` and `DATASET` in `deck/src/App.tsx`, set `organizationId` in
+(or edit `floor/lib/sanity.ts`), edit `PROJECT_ID` and `DATASET` in `deck/src/config.ts`, set `organizationId` in
 `deck/sanity.cli.ts`, then seed the voices and the first song:
 
 ```bash

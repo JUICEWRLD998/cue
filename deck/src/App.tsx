@@ -1,11 +1,9 @@
 import {type SanityConfig} from '@sanity/sdk'
 import {SanityApp} from '@sanity/sdk-react'
 import {Suspense} from 'react'
+import {DATASET, PROJECT_ID} from './config'
 import {Deck} from './Deck'
 import './App.css'
-
-export const PROJECT_ID = 'jwc6peq5'
-export const DATASET = 'production'
 
 const sanityConfigs: SanityConfig[] = [{projectId: PROJECT_ID, dataset: DATASET}]
 
