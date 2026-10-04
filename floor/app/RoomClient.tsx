@@ -75,6 +75,12 @@ export default function RoomClient() {
     if (!song) return
     setState('loading')
     try {
+      // start from the song that is published now, not the one the preview loaded earlier
+      const fresh = await fetchRoom()
+      if (!fresh.song) throw new Error('No published song in the dataset.')
+      rev.current = fresh.song._rev
+      setVoices(fresh.voices)
+      setSong(fresh.song)
       const p = new Player(new AudioContext())
       player.current = p
       p.onSwap = (next, atMs) => {
@@ -87,15 +93,15 @@ export default function RoomClient() {
         dropTimer.current = setTimeout(() => setDropping(false), DROP_MS)
         setDrop({title: next.title, at: atMs, heardMs: n ? Math.max(0, n.heard - n.updated) : 0})
       }
-      p.setVoices(voices)
-      p.setSong(song)
+      p.setVoices(fresh.voices)
+      p.setSong(fresh.song)
       p.start()
       setState('live')
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e))
       setState('error')
     }
-  }, [song, voices])
+  }, [song])
 
   // live updates: listen for published changes, with a slow poll as the fallback
   useEffect(() => {
@@ -140,7 +146,7 @@ export default function RoomClient() {
   const live = state === 'live'
 
   return (
-    <main className={styles.main}>
+    <main id="main" className={styles.main}>
       <section className={styles.intro}>
         <div className={styles.copy}>
           <h1 className={styles.title}>{song ? song.title : 'The room'}</h1>
@@ -159,12 +165,12 @@ export default function RoomClient() {
             )}
             {state === 'loading' && <span className={styles.note}>Opening the room.</span>}
             {live && (
-              <button className={styles.secondary} aria-pressed={muted} onClick={() => setMuted((m) => !m)}>
+              <button className={styles.secondary} data-on={muted} onClick={() => setMuted((m) => !m)}>
                 {muted ? 'Unmute' : 'Mute'}
               </button>
             )}
           </div>
-          {state === 'error' && <p className={styles.err}>Could not open the room: {error}</p>}
+          {state === 'error' && <p className={styles.err}>Could not open the room: {error}. Check your connection and reload the page.</p>}
         </div>
         <div className={styles.disc}>
           <Disc turn={turn} label="A record that turns once per loop of the song" />
