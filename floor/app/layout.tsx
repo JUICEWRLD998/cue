@@ -1,6 +1,7 @@
 import type {Metadata} from 'next'
 import {Anybody, Schibsted_Grotesk} from 'next/font/google'
 import Link from 'next/link'
+import {MotionProvider} from '../components/MotionProvider'
 import './globals.css'
 import styles from './shell.module.css'
 
@@ -27,7 +28,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
             <a href="https://github.com/JUICEWRLD998/cue">Source</a>
           </nav>
         </header>
-        {children}
+        <MotionProvider>{children}</MotionProvider>
         <footer className={styles.footer}>
           <p>Built for the DEV Sanity Challenge by Mustapha Fadhlullah, independent security researcher.</p>
         </footer>
