@@ -1,0 +1,14 @@
+.main { max-width: 56rem; margin: 0 auto; padding: 2rem 1rem; font-family: system-ui, sans-serif; }
+.title { font-size: 1.75rem; margin: 0 0 0.25rem; }
+.sub { margin: 0 0 1.5rem; opacity: 0.7; }
+.start { font-size: 1.1rem; padding: 0.75rem 1.25rem; cursor: pointer; }
+.row { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-bottom: 1rem; }
+.mute { margin-left: auto; padding: 0.4rem 0.8rem; cursor: pointer; }
+.grid { display: grid; gap: 4px; }
+.lane { display: grid; grid-template-columns: 7rem repeat(16, 1fr); gap: 4px; align-items: center; }
+.laneName { font-size: 0.85rem; opacity: 0.8; }
+.cell { aspect-ratio: 1; min-height: 14px; background: rgba(127, 127, 127, 0.18); border-radius: 3px; }
+.hit { background: rgba(127, 127, 127, 0.55); }
+.now { outline: 2px solid currentColor; }
+.status { margin-top: 1rem; }
+.err { color: crimson; }
